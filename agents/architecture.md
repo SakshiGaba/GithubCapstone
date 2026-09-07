@@ -18,6 +18,7 @@ A simple full-stack CRUD app: React frontend, Express backend, SQLite database.
   - `GET /api/items` — list all items
   - `POST /api/items` — add a new item
   - `DELETE /api/items/:id` — delete an item
+  - Validates input, handles errors gracefully (400 for bad input, 404 for not found, 500 for server/db errors).
 
 ### 3. Database (SQLite)
 - Location: `server/db/app.db`

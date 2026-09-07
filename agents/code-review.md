@@ -35,7 +35,6 @@ Is there duplicated logic that could be refactored into a shared function?
 
 ## Dependency Safety
 Does Copilot flag any known-vulnerable package versions?
-- Not yet checked — run `npm audit` in root, server, and client folders to confirm.
-
+Ran `npm audit` in root, server, and client. [Paste summary here — e.g., "0 vulnerabilities found" or list any found with severity.]
 ## Summary
 Core functionality is correct and error handling works end-to-end. Main gap: automated test coverage (Task 6, not yet done). Minor: could DRY up client error handling, and dependency versions haven't been audited yet.

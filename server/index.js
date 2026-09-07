@@ -33,6 +33,9 @@ app.post('/api/items', (req, res) => {
   if (!name || !name.trim()) {
     return res.status(400).json({ error: 'Name is required' });
   }
+  if (name.trim().length > 200) {
+    return res.status(400).json({ error: 'Name must be 200 characters or fewer' });
+  }
   db.run('INSERT INTO items (name) VALUES (?)', [name.trim()], function (err) {
     if (err) return res.status(500).json({ error: err.message });
     res.status(201).json({ id: this.lastID, name: name.trim() });
@@ -43,9 +46,13 @@ app.post('/api/items', (req, res) => {
 app.delete('/api/items/:id', (req, res) => {
   db.run('DELETE FROM items WHERE id = ?', [req.params.id], function (err) {
     if (err) return res.status(500).json({ error: err.message });
+    if (this.changes === 0) {
+      return res.status(404).json({ error: 'Item not found' });
+    }
     res.json({ deleted: this.changes });
   });
 });
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

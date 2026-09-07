@@ -1,0 +1,11 @@
+echo "Test 1: empty name (expect 400)"
+curl -s -X POST http://localhost:5000/api/items -H "Content-Type: application/json" -d "{\"name\":\"\"}"
+echo ""
+echo ""
+echo "Test 2: delete non-existent id (expect 404)"
+curl -s -X DELETE http://localhost:5000/api/items/9999
+echo ""
+echo ""
+echo "Test 3: normal add (expect 201-style success)"
+curl -s -X POST http://localhost:5000/api/items -H "Content-Type: application/json" -d "{\"name\":\"Another test\"}"
+echo ""

@@ -34,7 +34,11 @@ Is there duplicated logic that could be refactored into a shared function?
 - ⚠️ `addItem` and `deleteItem` both repeat the same try/catch + error-setting pattern. Could be refactored into a shared helper, but current duplication is minimal (2 instances) and still readable — low priority.
 
 ## Dependency Safety
-Does Copilot flag any known-vulnerable package versions?
-Ran `npm audit` in root, server, and client. [Paste summary here — e.g., "0 vulnerabilities found" or list any found with severity.]
+Ran `npm audit` in root, server, and client:
+- **Root:** 0 vulnerabilities.
+- **Server:** 10 vulnerabilities (2 low, 3 moderate, 4 high, 1 critical) — all traced to sqlite3's native build toolchain (tar, node-gyp, cacache). Fix requires `npm audit fix --force`, which would downgrade to sqlite3@6.0.1 (breaking change). Not applied — deferred as a known limitation.
+- **Client:** 31 vulnerabilities (9 low, 8 moderate, 14 high) — inherited from react-scripts' own dependency tree (svgo, webpack-dev-server, etc.). Fix requires downgrading react-scripts to 0.0.0 (breaking change). Not applied — deferred as a known limitation.
+
+**Rationale:** All flagged packages are build/dev tooling (native module compilation, dev server), not runtime code exposed to end users. Force-upgrading risks breaking core functionality (database access, build process) for vulnerabilities with low practical exposure in this project's context.
 ## Summary
 Core functionality is correct and error handling works end-to-end. Main gap: automated test coverage (Task 6, not yet done). Minor: could DRY up client error handling, and dependency versions haven't been audited yet.

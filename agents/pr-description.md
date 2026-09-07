@@ -24,7 +24,7 @@ Manual curl verification also performed on server endpoints (400/404/success cas
 - No authentication/multi-user support (out of scope per requirements.md).
 - No sanitization against script injection in item names (low risk, plain-text rendering only).
 - Client error-handling logic (try/catch pattern) is slightly duplicated between addItem/deleteItem — acceptable for current scope.
-- [Add npm audit findings here once run]
+- `npm audit`: server has 10 known vulnerabilities (sqlite3 build toolchain), client has 31 (react-scripts build toolchain) — both in dev/build dependencies, not runtime code. Deferred fixing due to breaking-change risk (see code-review.md for details).
 
 ## Reviewer Checklist
 - [ ] Server validation (empty name, max length) reviewed and correct
